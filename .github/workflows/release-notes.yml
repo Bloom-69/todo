@@ -1,7 +1,4 @@
-- name: Release-Notes-Preview
+name: Release-Notes-Preview
   # You may pin to the exact commit or the version.
   # uses: snyk/release-notes-preview@77b57680e453abd052d6e029e84037b644251ee8
-  uses: snyk/release-notes-preview@v1.6.1
-  with:
-    # Branch where the Semantic Release will occur.
-    releaseBranch: # optional, default is master
+uses: snyk/release-notes-preview@v1.6.1
