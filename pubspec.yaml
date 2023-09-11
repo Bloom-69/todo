@@ -20,6 +20,15 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: '^2.0.3'
+  msix: ^3.16.1
 
 flutter:
   uses-material-design: true
+
+msix_config:
+  display_name: Todo
+  publisher_display_name: BloomDevelop
+  identity_name: BloomDevelop.apps.todoapp
+  msix_version: 1.0.0.0
+  logo_path: Images/Icon.png
+  capabilities: internetClient,
