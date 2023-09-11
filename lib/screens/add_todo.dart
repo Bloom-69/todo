@@ -20,6 +20,7 @@ class AddTodoScreenState extends State<AddTodoScreen> {
       final Todo newTodo = Todo(
         title: _title,
         description: _description,
+        isCompleted: false,
       );
 
       Navigator.pop(context, newTodo);

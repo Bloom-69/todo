@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todoapp/screens/add_todo.dart';
 import 'package:todoapp/models/todo.dart';
+import 'package:todoapp/screens/add_todo.dart';
 import 'package:todoapp/screens/settings.dart';
 import 'package:todoapp/services/todo_service.dart';
 
@@ -48,6 +48,7 @@ class HomeScreenState extends State<HomeScreen> {
         backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         surfaceTintColor: Theme.of(context).colorScheme.surfaceTint,
         title: const Text('Todo App'),
+        centerTitle: true,
         actions: [
           IconButton(
               onPressed: () {
@@ -60,33 +61,58 @@ class HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: ListView.builder(
+        padding: const EdgeInsets.only(left: 10, right: 10),
         itemCount: _todos.length,
         itemBuilder: (context, index) {
           final todo = _todos[index];
-          return ListTile(
-            title: Text(todo.title),
-            subtitle: Text(todo.description),
-            onTap: () {
-              Scaffold.of(context).showBottomSheet<void>(
-                  elevation: 5,
-                  (BuildContext context) => Container(
-                        padding: const EdgeInsets.only(top: 25),
-                        height: 120,
-                        child: Column(children: <Widget>[
-                          ListTile(
-                            title: const Text("Delete"),
-                            leading: const Icon(Icons.delete),
-                            onTap: () {
-                              setState(() {
-                                _todos.removeAt(index);
-                              });
-                              Navigator.of(context).pop();
-                            },
-                          )
-                        ]),
-                      ));
-            },
-          );
+          return Card(
+              elevation: 0,
+              color: Theme.of(context).colorScheme.surfaceVariant,
+              clipBehavior: Clip.hardEdge,
+              child: InkWell(
+                child: ListTile(
+                  leading: Checkbox(
+                    value: todo.isCompleted,
+                    onChanged: (value) {
+                      setState(() {
+                        todo.isCompleted = value!;
+                      });
+                    },
+                  ),
+                  title: Text(todo.title),
+                  subtitle: Text(todo.description),
+                ),
+                onLongPress: () {
+                  Scaffold.of(context).showBottomSheet<void>(
+                      elevation: 5,
+                      (BuildContext context) => Container(
+                            padding: const EdgeInsets.only(top: 25),
+                            height: 240,
+                            child: Column(children: <Widget>[
+                              ListTile(
+                                title: const Text("Delete"),
+                                leading: const Icon(Icons.delete),
+                                onTap: () {
+                                  setState(() {
+                                    _todos.removeAt(index);
+                                  });
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                              ListTile(
+                                title: const Text("Mark as Completed"),
+                                leading: const Icon(Icons.check),
+                                onTap: () {
+                                  setState(() {
+                                    todo.isCompleted = true;
+                                  });
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ]),
+                          ));
+                },
+              ));
         },
       ),
       floatingActionButton: FloatingActionButton(
